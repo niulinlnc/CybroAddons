@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
 #############################################################################
 #
 #    Cybrosys Technologies Pvt. Ltd.
 #
 #    Copyright (C) 2019-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
-#    Author: Tintuk Tomin(<https://www.cybrosys.com>)
+#    Author: Tintuk Tomin @cybrosys(odoo@cybrosys.com)
 #
 #    You can modify it under the terms of the GNU AFFERO
 #    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
@@ -21,21 +20,17 @@
 #
 #############################################################################
 
-from odoo import models, fields, api, tools
+from odoo import api, models, fields
 
 
-class OdooDebrand(models.Model):
-    """
-     Fields to access from the database manager.
-    """
-    _inherit = "website"
+class ProductDimensionsVolume(models.Model):
+    _inherit = 'product.template'
 
-    def get_company_logo(self):
-        self.company_logo_url ="/web/image/res.company/%s/logo"%(self.id)
+    length = fields.Char(string="Length")
+    breadth = fields.Char(string="Breadth")
+    height = fields.Char(string="Height")
 
-    def get_favicon(self):
-        id = self.env['website'].sudo().search([])
-        self.favicon_url ="/web/image/website/%s/favicon"%(id[0].id)
-
-    favicon_url = fields.Text("Url", compute='get_favicon')
-    company_logo_url = fields.Text("Url", compute='get_company_logo')
+    @api.onchange('length', 'breadth', 'height')
+    def onchange_l_b_h(self):
+        self.volume = float(self.length if self.length else 0) * float(self.breadth if self.breadth else 0) * float(
+            self.height if self.height else 0)

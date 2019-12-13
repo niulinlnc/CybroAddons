@@ -3,8 +3,8 @@
 #
 #    Cybrosys Technologies Pvt. Ltd.
 #
-#    Copyright (C) 2019-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
-#    Author: Tintuk Tomin(<https://www.cybrosys.com>)
+#    Copyright (C) 2019-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
+#    Author: Tintuk Tomin @cybrosys(odoo@cybrosys.com)
 #
 #    You can modify it under the terms of the GNU AFFERO
 #    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
@@ -21,23 +21,21 @@
 #############################################################################
 
 {
-    'name': "Odoo Debranding",
-    'version': "13.0.1.1.1",
-    'summary': """Odoo Backend and Front end Debranding""",
-    'description': """Debrand Odoo,Debranding, odoo13""",
-    'author': "Cybrosys Techno Solutions",
-    'company': "Cybrosys Techno Solutions",
-    'maintainer': "Cybrosys Techno Solutions",
-    'website': "https://cybrosys.com/",
-    'category': 'Tools',
-    'depends': ['website', 'base_setup'],
+    'name': 'Product Volume Calculation',
+    'version': '13.0.1.0.0',
+    'summary': """This module will helps you to give dimensions of the product.""",
+    'description': "Module helps you to manage the length, breadth and height of the product and calculates its volume accordingily.",
+    'category': "Inventory",
+    'author': 'Cybrosys Techno Solutions',
+    'company': 'Cybrosys Techno Solutions',
+    'website': "https://www.cybrosys.com",
+    'depends': ['base', 'stock'],
     'data': [
-        'views/views.xml',
-        'views/res_config_views.xml'
+        'views/volume_view.xml'
     ],
-    'qweb': ["static/src/xml/base.xml"],
-    'images': ['static/description/banner.gif'],
-    'license': "AGPL-3",
+    'demo': [],
+    'images': ['static/description/banner.jpg'],
+    'license': 'AGPL-3',
     'installable': True,
-    'application': False
+    'application': True,
 }

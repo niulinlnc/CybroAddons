@@ -57,7 +57,7 @@ class AccountAssetCategory(models.Model):
     journal_id = fields.Many2one('account.journal', string='Journal',
                                  required=True)
     company_id = fields.Many2one('res.company', string='Company',
-                                 required=True, default=lambda self: self.env.user.company_id)
+                                 required=True, default=lambda self: self.env.company)
     method = fields.Selection(
         [('linear', 'Linear'), ('degressive', 'Degressive')],
         string='Computation Method', required=True, default='linear',
@@ -125,11 +125,11 @@ class AccountAssetAsset(models.Model):
                                   required=True, readonly=True,
                                   states={'draft': [('readonly', False)]},
                                   default=lambda
-                                      self: self.env.user.company_id.currency_id.id)
+                                      self: self.env.company.currency_id.id)
     company_id = fields.Many2one('res.company', string='Company',
                                  required=True, readonly=True,
                                  states={'draft': [('readonly', False)]},
-                                 default=lambda self: self.env.user.company_id)
+                                 default=lambda self: self.env.company)
     note = fields.Text()
     category_id = fields.Many2one('account.asset.category', string='Category',
                                   required=True, change_default=True,
@@ -147,7 +147,7 @@ class AccountAssetAsset(models.Model):
     active = fields.Boolean(default=True)
     partner_id = fields.Many2one('res.partner', string='Partner',
                                  readonly=True,
-                                 states={'draft': [('readonly', False)]})
+                                 states={'draft': [('readonly', False)]}, )
     method = fields.Selection(
         [('linear', 'Linear'), ('degressive', 'Degressive')],
         string='Computation Method', required=True, readonly=True,
@@ -264,7 +264,7 @@ class AccountAssetAsset(models.Model):
                     amount = amount_to_depr / self.method_number
                     if sequence == 1:
                         if self.method_period % 12 != 0:
-                            date = datetime.strptime(self.date, '%Y-%m-%d')
+                            date = datetime.strptime(str(self.date), '%Y-%m-%d')
                             month_days = \
                             calendar.monthrange(date.year, date.month)[1]
                             days = month_days - date.day + 1
@@ -281,7 +281,7 @@ class AccountAssetAsset(models.Model):
                 if self.prorata:
                     if sequence == 1:
                         if self.method_period % 12 != 0:
-                            date = datetime.strptime(self.date, '%Y-%m-%d')
+                            date = datetime.strptime(str(self.date), '%Y-%m-%d')
                             month_days = \
                             calendar.monthrange(date.year, date.month)[1]
                             days = month_days - date.day + 1
@@ -352,9 +352,9 @@ class AccountAssetAsset(models.Model):
                                          self.date.year))  # e.g. 2018-12-31 +1 -> 2019
                     else:
                         asset_date = datetime.strptime(
-                            self.date[:4] + '-01-01', DF).date()
+                            str(self.date)[:4] + '-01-01', DF).date()
                 else:
-                    asset_date = datetime.strptime(self.date[:7] + '-01',
+                    asset_date = datetime.strptime(str(self.date)[:7] + '-01',
                                                    DF).date()
                 # if we already have some previous validated entries, starting date isn't 1st January but last entry + method period
                 if posted_depreciation_line_ids and \
@@ -383,6 +383,7 @@ class AccountAssetAsset(models.Model):
                                                     posted_depreciation_line_ids,
                                                     total_days,
                                                     depreciation_date)
+
                 amount = self.currency_id.round(amount)
                 if float_is_zero(amount,
                                  precision_rounding=self.currency_id.rounding):
@@ -585,6 +586,7 @@ class AccountAssetAsset(models.Model):
         res = super(AccountAssetAsset, self).write(vals)
         if 'depreciation_line_ids' not in vals and 'state' not in vals:
             for rec in self:
+                print("rec",rec)
                 rec.compute_depreciation_board()
         return res
 

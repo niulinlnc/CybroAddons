@@ -30,7 +30,6 @@ models.load_models({
     }
 });
 
-
 var ReturnWidget = PopupWidget.extend({
     template:'ReturnWidget',
 
@@ -167,10 +166,14 @@ var OrderListScreenWidget = ScreenWidget.extend({
         var self = this;
         this._super();
         this.renderElement();
+        var orders = this.pos.orders;
         this.$('.back').click(function(){
             self.gui.back();
         });
-        var orders = this.pos.orders;
+        this.$('.refresh').click(function(){
+            location.reload();
+        });
+
         this.render_list(orders);
         var search_timeout = null;
         this.$('.searchbox input').on('keypress',function(event){

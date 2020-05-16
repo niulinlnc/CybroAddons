@@ -22,8 +22,9 @@
 
 {
     'name': 'Odoo 13 Full Accounting Kit',
-    'version': '13.0.2.4.1',
+    'version': '13.0.4.7.8',
     'category': 'Accounting',
+    'live_test_url': 'https://www.youtube.com/watch?v=peAp2Tx_XIs',
     'summary': """ Asset and Budget Management,
                  Accounting Reports, PDC, Lock dates, 
                  Credit Limit, Follow Ups, 
@@ -53,6 +54,9 @@
         'data/account_pdc_data.xml',
         'data/followup_levels.xml',
         'data/account_asset_data.xml',
+        'data/recurring_entry_cron.xml',
+        'views/assets.xml',
+        'views/dashboard_views.xml',
         'views/reports_config_view.xml',
         'views/accounting_menu.xml',
         'views/credit_limit_view.xml',
@@ -80,7 +84,6 @@
         'wizard/account_bank_book_wizard_view.xml',
         'wizard/account_cash_book_wizard_view.xml',
         'wizard/account_day_book_wizard_view.xml',
-        'wizard/recurring_payments_wizard.xml',
         'report/report_financial.xml',
         'report/general_ledger_report.xml',
         'report/report_journal_audit.xml',
@@ -94,6 +97,9 @@
         'report/account_day_book_view.xml',
         'report/account_asset_report_views.xml',
         'report/report.xml',
+    ],
+    'qweb': [
+        'static/src/xml/template.xml'
     ],
     'license': 'LGPL-3',
     'images': ['static/description/banner.gif'],

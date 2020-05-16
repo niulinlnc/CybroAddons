@@ -21,7 +21,7 @@
 #############################################################################
 {
     'name': 'Mobile Service Management',
-    'version': '13.0.1.0.1',
+    'version': '13.0.1.1.2',
     'summary': 'Module for managing mobile service shop daily activities.',
     'category': 'Industries',
     'author': 'Cybrosys Techno Solutions',
@@ -42,7 +42,7 @@
              'reports/service_ticket_template.xml',
              'data/mobile_service_data.xml',
              'data/mobile_service_email_template.xml'],
-    'images': ['static/description/banner.jpg'],
+    'images': ['static/description/banner.png'],
     'installable': True,
     'application': True,
     'auto_install': False,
